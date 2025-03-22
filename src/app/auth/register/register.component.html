@@ -1,0 +1,77 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 col-xl-5">
+            <div class="card mt-4">
+                <div class="card-body p-4">
+                    <div class="text-center mt-2">
+                        <h5 class="text-primary">Create New Account</h5>
+                        <p class="text-muted">Get your free account now</p>
+                    </div>
+                    <div class="p-2 mt-4">
+                        <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+                            <div class="mb-3">
+                                <label for="useremail" class="form-label required">Email</label>
+                                <input type="email" class="form-control" id="useremail"
+                                    placeholder="Enter email address" required formControlName="email"
+                                    [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+                                <div class="invalid-feedback">
+                                    <span *ngIf="f['email'].hasError('required')">
+                                        Please enter email
+                                    </span>
+                                    <span *ngIf="f['email'].hasError('email')">
+                                        Please enter valid email
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label for="phoneNumber" class="form-label required">Phone Number</label>
+                                <input type="tel" class="form-control" id="phoneNumber" placeholder="Enter phone number"
+                                    required formControlName="phone"
+                                    [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }">
+                                <div class="invalid-feedback">
+                                    Please enter phone number
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="userpassword" class="form-label required">Password</label>
+                                <div class="position-relative auth-pass-inputgroup">
+                                    <input [type]="fieldTextType ? 'text' : 'password'"
+                                        class="form-control pe-5 password-input" placeholder="Enter password"
+                                        id="password-input" required formControlName="password"
+                                        [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+                                    <button
+                                        class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
+                                        type="button" id="password-addon">
+                                        <i class="fa fs-10 align-middle"
+                                            [ngClass]="{'fa-eye-slash': !fieldTextType, 'fa-eye': fieldTextType}"
+                                            (click)="toggleFieldTextType()">
+                                        </i>
+                                    </button>
+                                    <div class="invalid-feedback">
+                                        Please enter password
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <button class="btn btn-success w-100" type="submit">Sign Up</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 text-center">
+                <p class="mb-0">
+                    Already have an account ?
+                    <a routerLink="/auth/login" class="fw-semibold text-primary text-decoration-underline">
+                        Signin
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ! loader -->
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
