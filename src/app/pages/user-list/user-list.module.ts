@@ -6,6 +6,7 @@ import { ApiService } from 'src/app/core/services/api.service';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthGuard } from 'src/app/core/guards/auth.guard';
 
 @NgModule({
     declarations: [
@@ -16,7 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         NgbModule,
         ReactiveFormsModule,
         RouterModule.forChild([
-            { path: "", component: UserListComponent }
+            { path: "list", component: UserListComponent, canActivate: [AuthGuard] },
         ]),
         NgxSpinnerModule
     ]
