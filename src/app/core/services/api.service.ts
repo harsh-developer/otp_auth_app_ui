@@ -50,33 +50,11 @@ export class ApiService {
             if (err.status == 400) {
               resolve(err.error.response);
             }
-            else if (err.status == 401) {
-              resolve(err);
-              window.location.href = "/login";
-            }
-            else if (err.status == 403) {
-              resolve(err);
-              window.location.href = "/access-denied";
-            } else if ((err.status == 500 || err.status == 501)) {
-              this.errorLog(err);
-              resolve({ error: true, msg: 'Internal Server Error' });
-            }
-            else if (err.status == 503) {
-              this.errorLog(err);
-              resolve({ error: true, msg: 'Server Maintenance error' });
-            }
-            else if (err.status) {
-              this.errorLog(err);
-              resolve({ error: true, msg: 'Unexpected Error' });
-            } else if (err.detail == 'Not Found') {
-              this.errorLog(err);
-              resolve({ error: true, msg: "API doesn't exist." })
-            } else {
-              this.errorLog(err);
-              resolve({ error: true, msg: 'You failed to hit api correctly', status: 400 });
+            else {
+              resolve(err.error.response);
             }
           }
-        })
+        });
     });
   }
 

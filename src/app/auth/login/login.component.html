@@ -1,0 +1,70 @@
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6 col-xl-5">
+            <div class="card mt-4">
+                <div class="card-body p-4">
+                    <div class="text-center mt-2">
+                        <h5 class="text-primary">Welcome !</h5>
+                        <p class="text-muted">Sign in to continue to OTP Auth App.</p>
+                    </div>
+                    <div class="p-2 mt-4">
+                        <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+
+                            <div class="mb-3">
+                                <label for="emailInput" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="emailInput" placeholder="Enter email"
+                                    formControlName="email"
+                                    [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+                                <div *ngIf="submitted && f['email'].errors" class="invalid-feedback" align="left">
+                                    <span *ngIf="f['email'].errors['required']">
+                                        Please enter email
+                                    </span>
+                                    <span *ngIf="f['email'].errors['email']">
+                                        Please enter a valid email
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="password-input">Password</label>
+                                <div class="position-relative auth-pass-inputgroup mb-3">
+                                    <input [type]="fieldTextType ? 'text' : 'password'"
+                                        class="form-control pe-5 password-input" placeholder="Enter password"
+                                        id="password-input" formControlName="password"
+                                        [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+                                    <button
+                                        class="btn btn-link position-absolute end-0 top-0 text-decoration-none text-muted password-addon"
+                                        type="button" id="password-addon">
+                                        <i class="fa fs-10 align-middle"
+                                            [ngClass]="{'fa-eye-slash': !fieldTextType, 'fa-eye': fieldTextType}"
+                                            (click)="toggleFieldTextType()">
+                                        </i>
+                                    </button>
+                                    <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+                                        <span *ngIf="f['password'].errors['required']">Password is
+                                            required</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-4">
+                                <button class="btn btn-success w-100" type="submit">Sign In</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4 text-center">
+                <p class="mb-0">Don't have an account ?
+                    <a routerLink="/auth/register" class="fw-semibold text-primary text-decoration-underline">
+                        Signup
+                    </a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- ! loader -->
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>

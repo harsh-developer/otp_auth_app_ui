@@ -1,0 +1,106 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">S. No.</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Phone</th>
+                        <th scope="col" class="text-center">Phone Verification Status</th>
+                        <th scope="col">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let user of userList; let i = index;">
+                        <th scope="row" class="text-center">
+                            {{i+1}}
+                        </th>
+                        <td>{{user.email ? user.email : ""}}</td>
+                        <td>{{user.phone ? user.phone : ""}}</td>
+                        <td class=text-center>
+                            <span class="badge"
+                                [ngClass]="{'text-bg-danger': !user.isVerifiedPhone, 'text-bg-success': user.isVerifiedPhone}">
+                                {{user.isVerifiedPhone && user.isVerifiedPhone == true ? 'Yes' : 'No'}}
+                            </span>
+                        </td>
+                        <td>
+                            <button class="btn btn-primary btn-sm" (click)="openVerificationModal(content, i)"
+                                [disabled]="user.isVerifiedPhone">
+                                Verify Phone
+                            </button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!-- ! loader -->
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>
+
+
+<!-- ! phone verification modal -->
+<ng-template #content let-modal>
+    <div class="modal-header bg-primary-subtle">
+        <h4 class="modal-title">
+            Verify {{selectedUserDetails.phone}}
+        </h4>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="row gy-3">
+            <div class="col-12" *ngIf="!selectedUserDetails.isOtpSent">
+                <span>
+                    You will be sent an OTP to your phone number:
+                    <span class="text-info">
+                        {{selectedUserDetails.phone}}
+                    </span>
+                </span>
+            </div>
+            <div class="col-12" *ngIf="selectedUserDetails.isOtpSent">
+                <span>
+                    OTP has been sent to
+                    <span class="text-info">
+                        {{selectedUserDetails.phone}}
+                    </span>
+                </span>
+            </div>
+            <div class="col-12 text-center" *ngIf="!selectedUserDetails.isOtpSent">
+                <button class="btn btn-primary" (click)="sendOtp()">
+                    Send OTP
+                </button>
+            </div>
+            <form [formGroup]="otpForm" (ngSubmit)="submitOtp()">
+                <div class="col-12 mb-2" *ngIf="selectedUserDetails.isOtpSent">
+                    <input type="text" class="form-control" placeholder="Enter OTP" formControlName="otp"
+                        [ngClass]="{'is-invalid': isSubmitted && f['otp'].errors}" pattern="\d*">
+                    <div class="invalid-feedback" *ngIf="isSubmitted && f['otp'].errors">
+                        <span *ngIf="f['otp'].errors['required']">
+                            Please enter OTP
+                        </span>
+                        <span *ngIf="!f['otp'].errors['required'] && f['otp'].errors['pattern']">
+                            Please enter a valid OTP (Only digits allowed)
+                        </span>
+                        <span
+                            *ngIf="!f['otp'].errors['pattern'] && (f['otp'].errors['minlength'] || f['otp'].errors['maxlength'])">
+                            OTP must be exactly 6 digits
+                        </span>
+                    </div>
+                    <div class="text-end">
+                        <small>{{ formatTime(countdown) }}</small>
+                        <button type="button" class="btn btn-link btn-sm" *ngIf="expiryFlag || !isTimerRunning"
+                            (click)="sendOtp()">
+                            Resend OTP?
+                        </button>
+                    </div>
+                </div>
+                <div class="col-12 text-center" *ngIf="selectedUserDetails.isOtpSent">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</ng-template>
