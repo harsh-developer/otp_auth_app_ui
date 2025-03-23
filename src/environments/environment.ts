@@ -5,7 +5,7 @@ import { DEFAULT_CONFIG } from '../config/default';
 // The list of file replacements can be found in `angular.json`.
 export const environment = {
   production: false,
-  api_url: DEFAULT_CONFIG.dev_api_url
+  api_url: DEFAULT_CONFIG.api_url
 };
 
 /*
