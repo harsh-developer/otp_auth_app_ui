@@ -30,8 +30,7 @@ export class ApiService {
       const jwToken = this.jwtService.getToken();
       const httpHeaders: HttpHeaders = new HttpHeaders({
         Authorization: `Bearer ${jwToken}`,
-        "Content-Type": "application/json",
-        "source": "app"
+        "Content-Type": "application/json"
       });
 
       params = params || {};
